@@ -1,0 +1,994 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EatWell Guide — Food & Your Health</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --green: #2d6a4f;
+    --green-light: #52b788;
+    --green-pale: #d8f3dc;
+    --amber: #e76f51;
+    --amber-pale: #fde8e0;
+    --cream: #faf7f2;
+    --dark: #1a1a2e;
+    --text: #2d2d2d;
+    --muted: #7a7a7a;
+    --white: #ffffff;
+    --card-radius: 20px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--cream);
+    color: var(--text);
+    overflow-x: hidden;
+  }
+
+  header {
+    background: var(--green);
+    color: white;
+    padding: 60px 24px 80px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  header::before {
+    content: '';
+    position: absolute;
+    top: -80px; right: -80px;
+    width: 300px; height: 300px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.06);
+  }
+
+  header::after {
+    content: '';
+    position: absolute;
+    bottom: -60px; left: -60px;
+    width: 220px; height: 220px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.04);
+  }
+
+  .logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 14px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    opacity: 0.8;
+    margin-bottom: 20px;
+  }
+
+  header h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.2rem, 6vw, 3.8rem);
+    font-weight: 900;
+    line-height: 1.15;
+    margin-bottom: 16px;
+  }
+
+  header h1 span { color: #95d5b2; }
+
+  header p {
+    font-size: 1.1rem;
+    opacity: 0.85;
+    max-width: 520px;
+    margin: 0 auto 28px;
+    line-height: 1.6;
+  }
+
+  .hero-badge {
+    display: inline-block;
+    background: rgba(255,255,255,0.15);
+    border: 1px solid rgba(255,255,255,0.3);
+    border-radius: 50px;
+    padding: 8px 20px;
+    font-size: 0.85rem;
+    letter-spacing: 1px;
+  }
+
+  .nav-section {
+    background: white;
+    padding: 20px 24px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 20px rgba(0,0,0,0.06);
+  }
+
+  .nav-pills {
+    display: flex;
+    gap: 10px;
+    overflow-x: auto;
+    max-width: 1000px;
+    margin: 0 auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+
+  .nav-pills::-webkit-scrollbar { display: none; }
+
+  .pill {
+    flex-shrink: 0;
+    padding: 8px 18px;
+    border-radius: 50px;
+    border: 2px solid var(--green-pale);
+    background: transparent;
+    color: var(--green);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-decoration: none;
+  }
+
+  .pill:hover { background: var(--green); border-color: var(--green); color: white; }
+
+  main {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 48px 20px 80px;
+  }
+
+  .intro-box {
+    background: white;
+    border-radius: var(--card-radius);
+    padding: 32px;
+    margin-bottom: 48px;
+    border-left: 5px solid var(--green-light);
+    box-shadow: 0 4px 24px rgba(0,0,0,0.05);
+  }
+
+  .intro-box h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
+    margin-bottom: 12px;
+    color: var(--green);
+  }
+
+  .intro-box p { line-height: 1.7; color: var(--muted); font-size: 0.97rem; }
+
+  .condition {
+    background: white;
+    border-radius: var(--card-radius);
+    margin-bottom: 40px;
+    overflow: hidden;
+    box-shadow: 0 4px 30px rgba(0,0,0,0.07);
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+
+  .condition:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 40px rgba(0,0,0,0.12);
+  }
+
+  .condition-header {
+    padding: 28px 32px 24px;
+    display: flex;
+    align-items: flex-start;
+    gap: 18px;
+    border-bottom: 1px solid #f0f0f0;
+  }
+
+  .emoji-badge {
+    width: 60px;
+    height: 60px;
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.8rem;
+    flex-shrink: 0;
+  }
+
+  .condition-header h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.6rem;
+    margin-bottom: 6px;
+  }
+
+  .condition-header p { font-size: 0.92rem; color: var(--muted); line-height: 1.6; }
+
+  .condition-body {
+    padding: 28px 32px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+  }
+
+  @media (max-width: 600px) {
+    .condition-body { grid-template-columns: 1fr; }
+    .condition-header { flex-direction: column; }
+    .condition-header h2 { font-size: 1.3rem; }
+  }
+
+  .food-list { border-radius: 14px; padding: 22px; }
+  .food-list.eat { background: var(--green-pale); }
+  .food-list.avoid { background: var(--amber-pale); }
+
+  .food-list h3 {
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .food-list.eat h3 { color: var(--green); }
+  .food-list.avoid h3 { color: var(--amber); }
+
+  .food-list ul { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+
+  .food-list ul li {
+    font-size: 0.9rem;
+    line-height: 1.5;
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    color: var(--text);
+  }
+
+  .food-list ul li::before {
+    content: '';
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    margin-top: 6px;
+    flex-shrink: 0;
+  }
+
+  .eat li::before { background: var(--green); }
+  .avoid li::before { background: var(--amber); }
+
+  .food-visual {
+    padding: 0 32px 28px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .food-chip {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--cream);
+    border: 1px solid #e8e3db;
+    border-radius: 50px;
+    padding: 6px 14px;
+    font-size: 0.82rem;
+    font-weight: 500;
+    color: var(--text);
+  }
+
+  .doctor-note {
+    margin: 0 32px 28px;
+    background: #f8f4ff;
+    border: 1px solid #d4c8f0;
+    border-radius: 12px;
+    padding: 14px 18px;
+    font-size: 0.85rem;
+    color: #5a4a8a;
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    line-height: 1.6;
+  }
+
+  .doctor-note span { font-size: 1.1rem; flex-shrink: 0; }
+
+  /* ---- LIFESTYLE TIPS PANEL ---- */
+  .lifestyle-tips {
+    margin: 0 32px 28px;
+    background: #e8f5e9;
+    border: 1px solid #a5d6a7;
+    border-radius: 14px;
+    padding: 20px 22px;
+  }
+
+  .lifestyle-tips h4 {
+    font-size: 0.82rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--green);
+    margin-bottom: 14px;
+  }
+
+  .tips-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 12px;
+  }
+
+  .tip-card {
+    background: white;
+    border-radius: 10px;
+    padding: 14px;
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .tip-card .tip-icon { font-size: 1.3rem; flex-shrink: 0; }
+
+  .tip-card p { font-size: 0.82rem; line-height: 1.5; color: var(--text); }
+  .tip-card strong { display: block; margin-bottom: 3px; font-size: 0.83rem; color: var(--green); }
+
+  /* ---- HEART CHAIN VISUAL ---- */
+  .chain-visual {
+    margin: 0 32px 28px;
+    background: linear-gradient(135deg, #fff5f5, #ffe8e8);
+    border: 1px solid #ffcdd2;
+    border-radius: 14px;
+    padding: 20px 22px;
+  }
+
+  .chain-visual h4 {
+    font-size: 0.82rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #c62828;
+    margin-bottom: 14px;
+  }
+
+  .chain {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .chain-step {
+    background: white;
+    border: 1px solid #ffcdd2;
+    border-radius: 10px;
+    padding: 8px 14px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #b71c1c;
+    text-align: center;
+  }
+
+  .chain-arrow {
+    color: #e57373;
+    font-size: 1rem;
+    font-weight: bold;
+  }
+
+  /* ---- ARTHRITIS REMEDIES ---- */
+  .remedy-grid {
+    padding: 0 32px 28px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 14px;
+  }
+
+  .remedy-card {
+    background: #fff8e1;
+    border: 1px solid #ffe082;
+    border-radius: 14px;
+    padding: 16px;
+    text-align: center;
+  }
+
+  .remedy-card .r-icon { font-size: 1.8rem; margin-bottom: 8px; }
+  .remedy-card h4 { font-size: 0.88rem; font-weight: 700; color: #e65100; margin-bottom: 6px; }
+  .remedy-card p { font-size: 0.78rem; color: var(--muted); line-height: 1.5; }
+
+  /* ALLERGY SECTION */
+  .allergy-section {
+    background: white;
+    border-radius: var(--card-radius);
+    padding: 32px;
+    margin-bottom: 40px;
+    box-shadow: 0 4px 30px rgba(0,0,0,0.07);
+  }
+
+  .allergy-section h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.6rem;
+    margin-bottom: 8px;
+  }
+
+  .allergy-section > p { color: var(--muted); font-size: 0.93rem; margin-bottom: 24px; line-height: 1.6; }
+
+  .allergy-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; }
+
+  .allergy-card {
+    border-radius: 14px;
+    padding: 20px;
+    background: var(--cream);
+    border: 1px solid #e8e3db;
+  }
+
+  .allergy-card .icon { font-size: 1.6rem; margin-bottom: 10px; }
+  .allergy-card h4 { font-size: 0.95rem; font-weight: 600; margin-bottom: 6px; }
+  .allergy-card p { font-size: 0.83rem; color: var(--muted); line-height: 1.5; }
+
+  /* COLOR VARIANTS */
+  .c1 .emoji-badge { background: #e8f5e9; }
+  .c2 .emoji-badge { background: #fff3e0; }
+  .c3 .emoji-badge { background: #e3f2fd; }
+  .c4 .emoji-badge { background: #fce4ec; }
+  .c5 .emoji-badge { background: #f3e5f5; }
+  .c6 .emoji-badge { background: #ffebee; }
+  .c7 .emoji-badge { background: #fff8e1; }
+
+  footer {
+    background: var(--dark);
+    color: white;
+    text-align: center;
+    padding: 48px 24px;
+  }
+
+  footer h3 { font-family: 'Playfair Display', serif; font-size: 1.4rem; margin-bottom: 10px; }
+  footer p { opacity: 0.6; font-size: 0.88rem; line-height: 1.7; max-width: 500px; margin: 0 auto; }
+
+  .footer-badge {
+    display: inline-block;
+    background: rgba(255,255,255,0.1);
+    border-radius: 50px;
+    padding: 6px 16px;
+    font-size: 0.78rem;
+    letter-spacing: 1px;
+    margin-top: 20px;
+    opacity: 0.7;
+  }
+
+  /* SECTION DIVIDER */
+  .section-label {
+    font-family: 'Playfair Display', serif;
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--muted);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin: 48px 0 24px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .section-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: #e0dbd3;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .condition, .intro-box, .allergy-section { animation: fadeUp 0.5s ease both; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">EatWell Guide</div>
+  <h1>Eat Smart,<br><span>Live Better</span></h1>
+  <p>Friendly, clear guidance on the foods that help — and hurt — for common health conditions. Written for real people, not doctors.</p>
+  <div class="hero-badge">🌿 Trusted nutrition information for everyone</div>
+</header>
+
+<nav class="nav-section">
+  <div class="nav-pills">
+    <a href="#intro" class="pill">Overview</a>
+    <a href="#diabetes" class="pill">🩸 Diabetes</a>
+    <a href="#ulcer" class="pill">🫃 Ulcer</a>
+    <a href="#lactose" class="pill">🥛 Lactose</a>
+    <a href="#cerebral" class="pill">🧠 Cerebral Palsy</a>
+    <a href="#hypertension" class="pill">❤️ Hypertension</a>
+    <a href="#obesity" class="pill">⚖️ Obesity & Heart</a>
+    <a href="#arthritis" class="pill">🦴 Arthritis</a>
+    <a href="#allergies" class="pill">⚠️ Allergies</a>
+  </div>
+</nav>
+
+<main>
+
+  <div class="intro-box" id="intro">
+    <h2>Why does food matter so much?</h2>
+    <p>What you eat can either <strong>support your healing</strong> or silently make things worse. This guide is written for real people — not doctors — so you'll find clear, simple advice for some of the most common health conditions. Always use this as a starting point, and talk to your doctor or nutritionist for a plan that's just right for you. 💚</p>
+  </div>
+
+  <div class="section-label">Metabolic Conditions</div>
+
+  <!-- DIABETES -->
+  <section class="condition c1" id="diabetes">
+    <div class="condition-header">
+      <div class="emoji-badge">🩸</div>
+      <div>
+        <h2>Diabetes</h2>
+        <p>Diabetes affects how your body uses sugar (glucose). When you eat, your blood sugar rises — and with diabetes, it rises too high. The right foods help keep your blood sugar steady and your energy balanced all day.</p>
+      </div>
+    </div>
+    <div class="condition-body">
+      <div class="food-list eat">
+        <h3>✅ Eat More Of</h3>
+        <ul>
+          <li>Leafy greens (spinach, ugwu, kale)</li>
+          <li>Whole grains (oats, brown rice, millet)</li>
+          <li>Beans, lentils, and chickpeas</li>
+          <li>Fatty fish like mackerel and salmon</li>
+          <li>Nuts and seeds (in small amounts)</li>
+          <li>Avocados and berries</li>
+          <li>Unripe plantain and sweet potatoes</li>
+        </ul>
+      </div>
+      <div class="food-list avoid">
+        <h3>❌ Try to Avoid</h3>
+        <ul>
+          <li>Sugary drinks (sodas, juice, energy drinks)</li>
+          <li>White bread, white rice (in large portions)</li>
+          <li>Fried and processed foods</li>
+          <li>Cakes, biscuits, and pastries</li>
+          <li>Very ripe bananas and overripe plantain</li>
+          <li>Alcohol — it confuses blood sugar levels</li>
+        </ul>
+      </div>
+    </div>
+    <div class="food-visual">
+      <div class="food-chip">🥑 Avocado</div>
+      <div class="food-chip">🐟 Mackerel</div>
+      <div class="food-chip">🫘 Beans</div>
+      <div class="food-chip">🥦 Broccoli</div>
+      <div class="food-chip">🌾 Oats</div>
+      <div class="food-chip">🥬 Spinach</div>
+      <div class="food-chip">🫐 Berries</div>
+    </div>
+    <div class="doctor-note">
+      <span>👨‍⚕️</span>
+      <p><strong>Doctor's note:</strong> Portion size matters just as much as food choice. Eating smaller meals more often helps keep blood sugar from spiking. Track your glucose levels regularly with your doctor's guidance.</p>
+    </div>
+  </section>
+
+  <!-- ULCER -->
+  <section class="condition c2" id="ulcer">
+    <div class="condition-header">
+      <div class="emoji-badge">🫃</div>
+      <div>
+        <h2>Stomach Ulcer</h2>
+        <p>A stomach ulcer is a sore on the lining of your stomach or small intestine. Certain foods irritate that sore and worsen pain — while others soothe and gently help it heal.</p>
+      </div>
+    </div>
+    <div class="condition-body">
+      <div class="food-list eat">
+        <h3>✅ Eat More Of</h3>
+        <ul>
+          <li>Cooked vegetables (carrots, broccoli, cabbage)</li>
+          <li>Unripe plantain — a natural stomach soother</li>
+          <li>Oatmeal and soft porridges</li>
+          <li>Bananas (they coat the stomach wall)</li>
+          <li>Boiled chicken or fish (lean proteins)</li>
+          <li>Honey — has natural anti-bacterial properties</li>
+          <li>Yoghurt with probiotics</li>
+        </ul>
+      </div>
+      <div class="food-list avoid">
+        <h3>❌ Try to Avoid</h3>
+        <ul>
+          <li>Spicy foods — pepper, chilli, hot sauce</li>
+          <li>Alcohol — eats away at the stomach lining</li>
+          <li>Coffee and strong tea (increase acid)</li>
+          <li>Fried and oily foods</li>
+          <li>Citrus fruits like oranges and lemons</li>
+          <li>Carbonated drinks (fizzy sodas)</li>
+        </ul>
+      </div>
+    </div>
+    <div class="food-visual">
+      <div class="food-chip">🍌 Banana</div>
+      <div class="food-chip">🥕 Carrots</div>
+      <div class="food-chip">🍯 Honey</div>
+      <div class="food-chip">🌾 Oatmeal</div>
+      <div class="food-chip">🐔 Boiled Chicken</div>
+      <div class="food-chip">🥛 Yoghurt</div>
+    </div>
+    <div class="doctor-note">
+      <span>👨‍⚕️</span>
+      <p><strong>Doctor's note:</strong> Never skip meals with an ulcer — an empty stomach produces acid that attacks the wound. Eat small meals every 3–4 hours. Most ulcers are caused by a bacteria called H. pylori and can be treated with medication.</p>
+    </div>
+  </section>
+
+  <!-- LACTOSE -->
+  <section class="condition c3" id="lactose">
+    <div class="condition-header">
+      <div class="emoji-badge">🥛</div>
+      <div>
+        <h2>Lactose Intolerance</h2>
+        <p>People with lactose intolerance can't fully digest lactose — the sugar found in milk and dairy. It causes bloating, cramps, and diarrhea when dairy is consumed.</p>
+      </div>
+    </div>
+    <div class="condition-body">
+      <div class="food-list eat">
+        <h3>✅ Eat More Of</h3>
+        <ul>
+          <li>Plant-based milks (soy, oat, almond, coconut)</li>
+          <li>Hard cheeses like cheddar (lower in lactose)</li>
+          <li>Lactose-free yoghurt and milk</li>
+          <li>Calcium-rich vegetables: kale, broccoli, ugu</li>
+          <li>Sardines and other fish with soft bones</li>
+          <li>Tofu and soy products</li>
+        </ul>
+      </div>
+      <div class="food-list avoid">
+        <h3>❌ Try to Avoid</h3>
+        <ul>
+          <li>Regular cow's milk</li>
+          <li>Ice cream and milkshakes</li>
+          <li>Soft cheeses (cream cheese, cottage cheese)</li>
+          <li>Butter and cream-based sauces</li>
+          <li>Processed foods with hidden milk (check labels)</li>
+          <li>Dairy-based desserts and chocolates</li>
+        </ul>
+      </div>
+    </div>
+    <div class="food-visual">
+      <div class="food-chip">🌾 Oat Milk</div>
+      <div class="food-chip">🌱 Soy Milk</div>
+      <div class="food-chip">🐟 Sardines</div>
+      <div class="food-chip">🥦 Broccoli</div>
+      <div class="food-chip">🧀 Hard Cheese</div>
+      <div class="food-chip">🌰 Almond Milk</div>
+    </div>
+    <div class="doctor-note">
+      <span>👨‍⚕️</span>
+      <p><strong>Doctor's note:</strong> You may still tolerate small amounts of dairy — especially eaten with food. Lactase enzyme supplements (available in pharmacies) can also help your body break down lactose better.</p>
+    </div>
+  </section>
+
+  <div class="section-label">Neurological & Movement Conditions</div>
+
+  <!-- CEREBRAL PALSY -->
+  <section class="condition c4" id="cerebral">
+    <div class="condition-header">
+      <div class="emoji-badge">🧠</div>
+      <div>
+        <h2>Cerebral Palsy</h2>
+        <p>Cerebral palsy affects movement and muscle control. Many people with CP have difficulty chewing or swallowing, and may need extra calories due to higher muscle activity. Good nutrition supports strength, brain health, and quality of life.</p>
+      </div>
+    </div>
+    <div class="condition-body">
+      <div class="food-list eat">
+        <h3>✅ Eat More Of</h3>
+        <ul>
+          <li>Soft, easy-to-chew foods (mashed yam, pap, custard)</li>
+          <li>Calorie-dense foods (nut butters, avocado)</li>
+          <li>Omega-3 rich foods (fish, flaxseed) for brain health</li>
+          <li>Iron-rich foods (liver, beans, green vegetables)</li>
+          <li>High-fibre foods to prevent constipation</li>
+          <li>Smoothies and fortified drinks for easy nutrition</li>
+        </ul>
+      </div>
+      <div class="food-list avoid">
+        <h3>❌ Try to Avoid</h3>
+        <ul>
+          <li>Hard, crunchy foods — difficult to chew safely</li>
+          <li>Stringy or chewy meats — choking risk</li>
+          <li>Thin watery liquids — thicken them instead</li>
+          <li>Sticky foods like peanut candy or gummy sweets</li>
+          <li>High-sugar foods that cause energy crashes</li>
+          <li>Junk food with little nutritional value</li>
+        </ul>
+      </div>
+    </div>
+    <div class="food-visual">
+      <div class="food-chip">🥜 Peanut Butter</div>
+      <div class="food-chip">🥑 Avocado</div>
+      <div class="food-chip">🐟 Fish</div>
+      <div class="food-chip">🍠 Mashed Yam</div>
+      <div class="food-chip">🥬 Green Veg</div>
+      <div class="food-chip">🫘 Beans</div>
+    </div>
+    <div class="doctor-note">
+      <span>👨‍⚕️</span>
+      <p><strong>Doctor's note:</strong> Food texture is critical for people with CP. A speech therapist or occupational therapist can assess swallowing and recommend the safest textures. Never leave someone with CP eating alone.</p>
+    </div>
+  </section>
+
+  <div class="section-label">Cardiovascular Health</div>
+
+  <!-- HYPERTENSION -->
+  <section class="condition c5" id="hypertension">
+    <div class="condition-header">
+      <div class="emoji-badge">❤️</div>
+      <div>
+        <h2>Hypertension (High Blood Pressure)</h2>
+        <p>Hypertension means your blood is pushing too hard against your artery walls. Over time, this strains your heart and kidneys. Salt and potassium intake have a massive impact on your blood pressure levels.</p>
+      </div>
+    </div>
+    <div class="condition-body">
+      <div class="food-list eat">
+        <h3>✅ Eat More Of</h3>
+        <ul>
+          <li>Potassium-rich foods (bananas, potatoes, spinach)</li>
+          <li>Oats and whole grains</li>
+          <li>Garlic — naturally lowers blood pressure</li>
+          <li>Low-fat dairy (yoghurt, low-fat milk)</li>
+          <li>Fatty fish (mackerel, salmon)</li>
+          <li>Berries and beets</li>
+          <li>Unsalted nuts and seeds</li>
+        </ul>
+      </div>
+      <div class="food-list avoid">
+        <h3>❌ Try to Avoid</h3>
+        <ul>
+          <li>Table salt and salty seasonings (Maggi, Knorr)</li>
+          <li>Processed and canned foods (hidden salt)</li>
+          <li>Red meat in large quantities</li>
+          <li>Alcohol — raises blood pressure significantly</li>
+          <li>Fried and fast foods</li>
+          <li>Pickled foods and salty snacks</li>
+        </ul>
+      </div>
+    </div>
+    <div class="food-visual">
+      <div class="food-chip">🍌 Banana</div>
+      <div class="food-chip">🧄 Garlic</div>
+      <div class="food-chip">🫐 Berries</div>
+      <div class="food-chip">🌾 Oats</div>
+      <div class="food-chip">🥬 Spinach</div>
+      <div class="food-chip">🐟 Mackerel</div>
+    </div>
+    <div class="doctor-note">
+      <span>👨‍⚕️</span>
+      <p><strong>Doctor's note:</strong> The DASH diet is widely recommended for high blood pressure. Reducing salt to less than 5g per day can make a significant difference. Monitor your blood pressure regularly at home.</p>
+    </div>
+  </section>
+
+  <!-- OBESITY & CHOLESTEROL -->
+  <section class="condition c6" id="obesity">
+    <div class="condition-header">
+      <div class="emoji-badge">⚖️</div>
+      <div>
+        <h2>Obesity, High Cholesterol & Heart Disease</h2>
+        <p>These three conditions are deeply linked. Excess body weight often raises cholesterol levels, which builds up as plaque in your arteries — narrowing them over time. This can lead to <strong>coronary artery blockage, chest pain, heart attack, and death</strong>. The good news? Food and lifestyle changes can break this chain.</p>
+      </div>
+    </div>
+
+    <!-- CHAIN OF DANGER VISUAL -->
+    <div class="chain-visual">
+      <h4>⚠️ How It Escalates — The Danger Chain</h4>
+      <div class="chain">
+        <div class="chain-step">Obesity</div>
+        <div class="chain-arrow">→</div>
+        <div class="chain-step">High Cholesterol (LDL)</div>
+        <div class="chain-arrow">→</div>
+        <div class="chain-step">Artery Plaque Buildup</div>
+        <div class="chain-arrow">→</div>
+        <div class="chain-step">Coronary Artery Blockage</div>
+        <div class="chain-arrow">→</div>
+        <div class="chain-step">Heart Attack / Death</div>
+      </div>
+    </div>
+
+    <div class="condition-body">
+      <div class="food-list eat">
+        <h3>✅ Eat More Of</h3>
+        <ul>
+          <li>Oats and barley — lower LDL (bad cholesterol)</li>
+          <li>Fatty fish (omega-3 reduces inflammation)</li>
+          <li>Olive oil instead of vegetable or palm oil</li>
+          <li>Avocados — full of heart-healthy fats</li>
+          <li>Fruits and vegetables high in fibre</li>
+          <li>Nuts (almonds, walnuts) in small portions</li>
+          <li>Legumes — beans, lentils, soybeans</li>
+          <li>Dark chocolate (70%+ cocoa, small amounts)</li>
+          <li>Green tea — helps reduce cholesterol</li>
+        </ul>
+      </div>
+      <div class="food-list avoid">
+        <h3>❌ Try to Avoid</h3>
+        <ul>
+          <li>Trans fats — fried foods, margarine, pastries</li>
+          <li>Saturated fats — fatty meats, full-fat dairy</li>
+          <li>Sugary drinks and snacks — convert to fat</li>
+          <li>Fast food and processed meat (sausages, hotdogs)</li>
+          <li>Refined carbs — white bread, white rice in excess</li>
+          <li>Palm oil and coconut oil in large amounts</li>
+          <li>Alcohol — adds empty calories, raises triglycerides</li>
+          <li>Late-night heavy meals — slow digestion stores as fat</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="food-visual">
+      <div class="food-chip">🥑 Avocado</div>
+      <div class="food-chip">🐟 Salmon</div>
+      <div class="food-chip">🌾 Oats</div>
+      <div class="food-chip">🫘 Lentils</div>
+      <div class="food-chip">🫒 Olive Oil</div>
+      <div class="food-chip">🥜 Walnuts</div>
+      <div class="food-chip">🍵 Green Tea</div>
+      <div class="food-chip">🍫 Dark Chocolate</div>
+    </div>
+
+    <!-- WEIGHT LOSS LIFESTYLE TIPS -->
+    <div class="lifestyle-tips">
+      <h4>🏃 Practices to Help Lose Weight & Protect Your Heart</h4>
+      <div class="tips-grid">
+        <div class="tip-card">
+          <div class="tip-icon">🚶</div>
+          <p><strong>Walk 30 Minutes Daily</strong> Even a brisk walk after meals burns calories and improves heart health significantly.</p>
+        </div>
+        <div class="tip-card">
+          <div class="tip-icon">🍽️</div>
+          <p><strong>Eat Smaller Portions</strong> Use a smaller plate. Stop eating when you're 80% full — your stomach takes 20 mins to signal fullness.</p>
+        </div>
+        <div class="tip-card">
+          <div class="tip-icon">💧</div>
+          <p><strong>Drink Water Before Meals</strong> Drinking 500ml of water 30 minutes before meals naturally reduces how much you eat.</p>
+        </div>
+        <div class="tip-card">
+          <div class="tip-icon">😴</div>
+          <p><strong>Sleep 7–8 Hours</strong> Poor sleep increases hunger hormones, making you crave fatty and sugary foods more.</p>
+        </div>
+        <div class="tip-card">
+          <div class="tip-icon">🧘</div>
+          <p><strong>Manage Stress</strong> Stress triggers cortisol, a hormone that causes fat to store around your belly — the most dangerous area.</p>
+        </div>
+        <div class="tip-card">
+          <div class="tip-icon">🚫</div>
+          <p><strong>Avoid Late-Night Eating</strong> Stop eating 2–3 hours before bedtime. Your body stores food as fat when you're inactive.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="doctor-note">
+      <span>👨‍⚕️</span>
+      <p><strong>Doctor's note:</strong> Aim to lose weight gradually — 0.5 to 1kg per week is healthy and sustainable. Crash diets don't work long-term. Ask your doctor for a cholesterol check (lipid panel test) at least once a year. Statins may be prescribed if your cholesterol is dangerously high.</p>
+    </div>
+  </section>
+
+  <div class="section-label">Bone & Joint Health</div>
+
+  <!-- ARTHRITIS -->
+  <section class="condition c7" id="arthritis">
+    <div class="condition-header">
+      <div class="emoji-badge">🦴</div>
+      <div>
+        <h2>Arthritis (Weak Bones & Joint Pain)</h2>
+        <p>Arthritis causes pain, swelling, and stiffness in your joints. It can also weaken the cartilage — the soft cushion between your bones. There are two main types: <strong>Osteoarthritis</strong> (wear and tear with age) and <strong>Rheumatoid Arthritis</strong> (the immune system attacks joints). Diet and lifestyle can significantly reduce pain and slow damage.</p>
+      </div>
+    </div>
+    <div class="condition-body">
+      <div class="food-list eat">
+        <h3>✅ Eat More Of</h3>
+        <ul>
+          <li>Fatty fish (salmon, mackerel) — reduce joint inflammation</li>
+          <li>Calcium-rich foods for bone strength (dairy, kale, ugu)</li>
+          <li>Vitamin D sources (eggs, fortified milk, sunlight)</li>
+          <li>Turmeric and ginger — natural anti-inflammatory spices</li>
+          <li>Broccoli — contains sulforaphane, protects cartilage</li>
+          <li>Berries — rich in antioxidants that fight inflammation</li>
+          <li>Olive oil — acts like a natural anti-inflammatory drug</li>
+          <li>Bone broth — rebuilds cartilage (collagen-rich)</li>
+        </ul>
+      </div>
+      <div class="food-list avoid">
+        <h3>❌ Try to Avoid</h3>
+        <ul>
+          <li>Red meat and processed meats — trigger inflammation</li>
+          <li>Fried and fast foods — increase inflammatory markers</li>
+          <li>Sugar and sugary drinks — worsen joint swelling</li>
+          <li>Refined carbohydrates (white bread, pastries)</li>
+          <li>Alcohol — interferes with arthritis medications</li>
+          <li>Excess salt — causes water retention, worsens swelling</li>
+          <li>Dairy in large amounts (for some people)</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="food-visual">
+      <div class="food-chip">🐟 Salmon</div>
+      <div class="food-chip">🌿 Turmeric</div>
+      <div class="food-chip">🫚 Olive Oil</div>
+      <div class="food-chip">🥦 Broccoli</div>
+      <div class="food-chip">🫐 Berries</div>
+      <div class="food-chip">🥛 Bone Broth</div>
+      <div class="food-chip">🥚 Eggs</div>
+    </div>
+
+    <!-- BONE & JOINT REMEDIES -->
+    <div class="remedy-grid">
+      <div class="remedy-card">
+        <div class="r-icon">☀️</div>
+        <h4>Get Sunlight Daily</h4>
+        <p>10–15 minutes of morning sun gives your body Vitamin D, which is essential for absorbing calcium and keeping bones strong.</p>
+      </div>
+      <div class="remedy-card">
+        <div class="r-icon">🏊</div>
+        <h4>Try Low-Impact Exercise</h4>
+        <p>Swimming, yoga, and walking put less pressure on joints while keeping them mobile and muscles strong around them.</p>
+      </div>
+      <div class="remedy-card">
+        <div class="r-icon">🌡️</div>
+        <h4>Hot & Cold Therapy</h4>
+        <p>Warm compresses reduce stiffness. Cold packs reduce swelling. Alternate them for 15–20 minutes during flare-ups.</p>
+      </div>
+      <div class="remedy-card">
+        <div class="r-icon">💊</div>
+        <h4>Glucosamine & Collagen</h4>
+        <p>Supplements like glucosamine and collagen peptides help rebuild cartilage. Ask your doctor before starting any supplement.</p>
+      </div>
+      <div class="remedy-card">
+        <div class="r-icon">⚖️</div>
+        <h4>Maintain a Healthy Weight</h4>
+        <p>Every extra kilogram puts 4kg of pressure on your knee joints. Losing even 5kg can dramatically reduce pain.</p>
+      </div>
+      <div class="remedy-card">
+        <div class="r-icon">🧘</div>
+        <h4>Practice Good Posture</h4>
+        <p>Poor posture puts uneven stress on joints. Sitting upright and sleeping in a supportive position protects your spine and knees.</p>
+      </div>
+    </div>
+
+    <div class="doctor-note">
+      <span>👨‍⚕️</span>
+      <p><strong>Doctor's note:</strong> Arthritis has no cure, but it can be managed well with the right diet, movement, and medication. Don't wait until joints are severely damaged before seeking help. Early intervention makes a big difference. A physiotherapist can design a safe exercise program just for your condition.</p>
+    </div>
+  </section>
+
+  <!-- ALLERGIES -->
+  <div class="section-label">Food Allergies</div>
+
+  <section class="allergy-section" id="allergies">
+    <h2>⚠️ Common Food Allergies</h2>
+    <p>Food allergies are different from food intolerances. With an allergy, even a tiny amount of the food can trigger a serious — sometimes life-threatening — reaction. Here are the most common ones to know:</p>
+    <div class="allergy-grid">
+      <div class="allergy-card">
+        <div class="icon">🥜</div>
+        <h4>Peanut Allergy</h4>
+        <p>One of the most serious. Reactions range from skin rash to anaphylaxis (throat swelling). Avoid all peanut products including peanut butter and groundnut oil.</p>
+      </div>
+      <div class="allergy-card">
+        <div class="icon">🌾</div>
+        <h4>Gluten / Celiac Disease</h4>
+        <p>Gluten (in wheat, barley, rye) damages the gut lining for people with celiac. Choose rice, cassava, sorghum, and certified gluten-free products.</p>
+      </div>
+      <div class="allergy-card">
+        <div class="icon">🦐</div>
+        <h4>Shellfish Allergy</h4>
+        <p>Shrimp, crayfish, crab, and lobster can cause severe reactions. Even cooking steam can trigger responses in sensitive people.</p>
+      </div>
+      <div class="allergy-card">
+        <div class="icon">🥚</div>
+        <h4>Egg Allergy</h4>
+        <p>More common in children. Watch for eggs hidden in baked goods, pasta, and sauces. Many children grow out of this allergy over time.</p>
+      </div>
+      <div class="allergy-card">
+        <div class="icon">🐟</div>
+        <h4>Fish Allergy</h4>
+        <p>Different from shellfish allergy. Common fish triggers include tuna, catfish, and cod. Always check food labels for fish-derived ingredients.</p>
+      </div>
+      <div class="allergy-card">
+        <div class="icon">🌰</div>
+        <h4>Tree Nut Allergy</h4>
+        <p>Includes cashews, walnuts, almonds. Often causes severe reactions. Carry an epinephrine auto-injector (EpiPen) if diagnosed.</p>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <h3>Talk to a Professional 💚</h3>
+  <p>This guide is a starting point — not a substitute for medical advice. Your doctor, dietitian, or nutritionist can create a personal meal plan that fits your health needs, lifestyle, and culture.</p>
+  <div class="footer-badge">EatWell Guide · Built with care for real people</div>
+</footer>
+
+</body>
+</html>
